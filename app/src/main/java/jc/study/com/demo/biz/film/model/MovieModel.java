@@ -1,5 +1,7 @@
 package jc.study.com.demo.biz.film.model;
 
+import android.util.Log;
+
 import java.util.List;
 
 import jc.study.com.demo.base.BaseApiListener;
@@ -10,7 +12,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 类的描述
@@ -27,20 +33,28 @@ public class MovieModel implements IMovieModel {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         MovieService service = retrofit.create(MovieService.class);
-        Call<MovieBean> call = service.getTopMovie(0, 10);
-        call.enqueue(new Callback<MovieBean>() {
-            @Override
-            public void onResponse(Call<MovieBean> call, Response<MovieBean> response) {
-                listener.onResponse(response.body());
-            }
+        service.getTopMovie(0, 10)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<MovieBean>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d("ttt", "onCompleted: ");
+                    }
 
-            @Override
-            public void onFailure(Call<MovieBean> call, Throwable t) {
-                listener.onFailure(t.getMessage());
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.onFailure(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(MovieBean movieBean) {
+                        listener.onResponse(movieBean);
+                    }
+                });
     }
 
 }

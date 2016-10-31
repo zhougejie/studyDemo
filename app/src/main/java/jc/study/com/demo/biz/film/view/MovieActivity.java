@@ -45,12 +45,7 @@ public class MovieActivity extends BaseActivity implements IMovieView {
 
     @OnClick(R.id.click_me_btn)
     public void onClickMe() {
-        if (NetworkUtil.isNetConnected(this)) {
-            mPresenter.getTopMovie();
-        } else {
-            mPresenter.getTopMovie();
-        }
-
+        mPresenter.getTopMovie();
     }
 
     @Override
