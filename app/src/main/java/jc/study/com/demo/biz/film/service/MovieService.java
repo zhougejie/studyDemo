@@ -14,7 +14,7 @@ public interface MovieService {
 
     // https://api.douban.com/v2/movie/top250?start=0&count=10
 
-    @GET("top250")
+    @GET("v2/movie/top250")
     Observable<MovieBean> getTopMovie(@Query("start") int start, @Query("count") int count);
 
 }
