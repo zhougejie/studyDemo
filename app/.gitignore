@@ -32,8 +32,6 @@ Thumbs.db
 .gradle
 build/
 
-core-release/core-release.aar
-
 **.apk
 
 /*/out
