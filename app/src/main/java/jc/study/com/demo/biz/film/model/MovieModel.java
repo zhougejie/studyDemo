@@ -1,6 +1,9 @@
 package jc.study.com.demo.biz.film.model;
 
 import android.util.Log;
+
+import java.util.List;
+
 import jc.study.com.demo.base.BaseApiListener;
 import jc.study.com.demo.biz.film.bean.MovieBean;
 import jc.study.com.demo.util.http.HttpMethods;
@@ -13,25 +16,28 @@ import rx.Subscriber;
  */
 public class MovieModel implements IMovieModel {
 
-    private Subscriber<MovieBean> mSubscriber;
+    private static final String TAG = "MovieModel";
+
+    private Subscriber<List<MovieBean>> mSubscriber;
 
     @Override
-    public void getTopMovie(int start, int count, final BaseApiListener<MovieBean> listener) {
+    public void getTopMovie(int start, int count, final BaseApiListener<List<MovieBean>> listener) {
 
-        mSubscriber = new Subscriber<MovieBean>() {
+        mSubscriber = new Subscriber<List<MovieBean>>() {
             @Override
             public void onCompleted() {
-                Log.d("ttt", "onCompleted: ");
+                Log.d(TAG, "onCompleted: ");
             }
 
             @Override
             public void onError(Throwable e) {
+                e.printStackTrace();
                 listener.onFailure(e.getMessage());
             }
 
             @Override
-            public void onNext(MovieBean movieBean) {
-                listener.onResponse(movieBean);
+            public void onNext(List<MovieBean> movieBeanList) {
+                listener.onResponse(movieBeanList);
             }
         };
         HttpMethods.getInstance().getTopMovie(mSubscriber, start, count);

@@ -17,6 +17,8 @@ import jc.study.com.demo.biz.user.view.IUserView;
  */
 public class UserPresenter implements OnAddUserListener {
 
+    private static final String TAG = "UserPresenter";
+
     private IUserModel mUserModel;
     private IUserView mUserView;
 
@@ -29,11 +31,11 @@ public class UserPresenter implements OnAddUserListener {
 
     @Override
     public void addUserSuccess() {
-        Log.d("ttt", "addUserSuccess: " + Thread.currentThread().getName());
+        Log.d(TAG, "addUserSuccess: " + Thread.currentThread().getName());
         mUserHandler.post(new Runnable() {
             @Override
             public void run() {
-                Log.d("ttt", "mUserHandler run: " + Thread.currentThread().getName());
+                Log.d(TAG, "mUserHandler run: " + Thread.currentThread().getName());
                 mUserView.showToast("add user success");
             }
         });
@@ -41,11 +43,11 @@ public class UserPresenter implements OnAddUserListener {
 
     @Override
     public void addUserFailed() {
-        Log.d("ttt", "addUserFailed: " + Thread.currentThread().getName());
+        Log.d(TAG, "addUserFailed: " + Thread.currentThread().getName());
         mUserHandler.post(new Runnable() {
             @Override
             public void run() {
-                Log.d("ttt", "mUserHandler run: " + Thread.currentThread().getName());
+                Log.d(TAG, "mUserHandler run: " + Thread.currentThread().getName());
                 mUserView.showToast("add user failed");
             }
         });

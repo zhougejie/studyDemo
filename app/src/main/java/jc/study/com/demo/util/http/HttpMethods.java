@@ -1,5 +1,8 @@
 package jc.study.com.demo.util.http;
 
+import android.util.Log;
+
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import jc.study.com.demo.biz.film.bean.MovieBean;
 import jc.study.com.demo.biz.film.service.MovieService;
@@ -9,6 +12,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -18,6 +22,8 @@ import rx.schedulers.Schedulers;
  */
 public class HttpMethods {
 
+    private static final String TAG = "HttpMethods";
+    
     // API的域名地址
     private static final String BASE_URL = "https://api.douban.com/";
 
@@ -48,9 +54,26 @@ public class HttpMethods {
                 .build();
     }
 
-    public void getTopMovie(Subscriber<MovieBean> subscriber, int start, int count) {
+    /**
+     * 返回的Json数据的预处理
+     */
+    private class HttpResultInit<T> implements Func1<TopMovieHttpResult<T>, T>{
+
+        @Override
+        public T call(TopMovieHttpResult<T> httpResult) {
+            if (httpResult.getCount() == 0) {
+                Log.e(TAG, "call: invalid count: " + httpResult.getCount());
+            }
+            return httpResult.getSubjects();
+        }
+
+
+    }
+
+    public void getTopMovie(Subscriber<List<MovieBean>> subscriber, int start, int count) {
         mRetrofit.create(MovieService.class)
                 .getTopMovie(start, count)
+                .map(new HttpResultInit<List<MovieBean>>())
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

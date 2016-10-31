@@ -1,5 +1,6 @@
 package jc.study.com.demo.biz.film.model;
 
+import java.util.List;
 import jc.study.com.demo.base.BaseApiListener;
 import jc.study.com.demo.biz.film.bean.MovieBean;
 
@@ -10,6 +11,6 @@ import jc.study.com.demo.biz.film.bean.MovieBean;
  */
 public interface IMovieModel {
 
-    void getTopMovie(int start, int count, final BaseApiListener<MovieBean> listener);
+    void getTopMovie(int start, int count, final BaseApiListener<List<MovieBean>> listener);
 
 }
