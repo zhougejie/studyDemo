@@ -29,4 +29,13 @@ public class LoginActivity extends BaseActivity implements ILoginViewI {
     }
 
 
+    @Override
+    public void showProgressDialog() {
+
+    }
+
+    @Override
+    public void hideProgressDialog() {
+
+    }
 }

@@ -6,4 +6,8 @@ package jc.study.com.demo.base;
  * 创建日期: 2016/10/28
  */
 public interface IBaseView {
+
+    void showProgressDialog();
+
+    void hideProgressDialog();
 }

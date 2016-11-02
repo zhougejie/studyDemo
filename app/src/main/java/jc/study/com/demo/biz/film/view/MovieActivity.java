@@ -1,5 +1,6 @@
 package jc.study.com.demo.biz.film.view;
 
+import android.app.ProgressDialog;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -8,7 +9,6 @@ import butterknife.OnClick;
 import jc.study.com.demo.R;
 import jc.study.com.demo.base.BaseActivity;
 import jc.study.com.demo.biz.film.presenter.MoviePresenter;
-import jc.study.com.demo.util.NetworkUtil;
 
 /**
  * 类的描述
@@ -20,6 +20,8 @@ public class MovieActivity extends BaseActivity implements IMovieView {
     private static final String TAG = "MovieActivity";
 
     private MoviePresenter mPresenter;
+
+    private ProgressDialog mProgressDialog;
 
     @BindView(R.id.click_me_btn)
     Button mClickMeBtn;
@@ -46,10 +48,27 @@ public class MovieActivity extends BaseActivity implements IMovieView {
     @OnClick(R.id.click_me_btn)
     public void onClickMe() {
         mPresenter.getTopMovie();
+
     }
 
     @Override
     public void updateResultTv(String result) {
         mResultTv.setText(result);
+    }
+
+    @Override
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage("加载中");
+        }
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        if(mProgressDialog != null) {
+            mProgressDialog.hide();
+        }
     }
 }
