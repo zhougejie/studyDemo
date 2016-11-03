@@ -6,7 +6,7 @@ import java.util.List;
 
 import jc.study.com.demo.base.BaseApiListener;
 import jc.study.com.demo.biz.film.bean.MovieBean;
-import jc.study.com.demo.util.http.HttpMethods;
+import jc.study.com.demo.common.util.http.HttpMethods;
 import rx.Subscriber;
 
 /**

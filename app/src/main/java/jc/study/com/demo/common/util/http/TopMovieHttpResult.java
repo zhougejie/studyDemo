@@ -1,6 +1,4 @@
-package jc.study.com.demo.util.http;
-
-import java.util.List;
+package jc.study.com.demo.common.util.http;
 
 /**
  * 这应该是json返回的data数据集，根据接口定义来

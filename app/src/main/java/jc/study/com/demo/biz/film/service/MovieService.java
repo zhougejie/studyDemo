@@ -3,7 +3,7 @@ package jc.study.com.demo.biz.film.service;
 import java.util.List;
 
 import jc.study.com.demo.biz.film.bean.MovieBean;
-import jc.study.com.demo.util.http.TopMovieHttpResult;
+import jc.study.com.demo.common.util.http.TopMovieHttpResult;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;

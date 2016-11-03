@@ -1,4 +1,4 @@
-package jc.study.com.demo.util;
+package jc.study.com.demo.common.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

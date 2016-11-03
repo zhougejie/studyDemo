@@ -1,4 +1,4 @@
-package jc.study.com.demo.util.http;
+package jc.study.com.demo.common.util.http;
 
 /**
  * 通用的Http结果返回类
